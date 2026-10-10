@@ -1,21 +1,60 @@
 Starting Container
-📥 Downloading video from Dropbox...
-→ https://dl.dropboxusercontent.com/scl/fi/24yybeouwv7qlxddt11nj/Young.Sheldon.S01E05.720p.BluRay.x264-GalaxyTV.mkv?dl=1
-❌ Error downloading video: Failed to download video. Status code: 403
-Error: Failed to download video. Status code: 403
+📥 Downloading video from Google Drive...
+→ https://drive.google.com/uc?id=1At6VPIBB02SNAdJSOg9eDlQKPqtvhSsw&export=download
+✅ Video downloaded successfully: downloads/source.mkv
+❌ Error creating clip: [Errno 32] Broken pipe
+MoviePy error: FFMPEG encountered the following error while writing file clips/clip_000_20261010_132328_0s-21s.mp4:
+ b"Stream map '0:a:0' matches no streams.\nTo ignore this, add a trailing '?' to the map.\nFailed to set value '0:a:0' for option 'map': Invalid argument\nError parsing options for output file clips/clip_000_20261010_132328_0s-21s.mp4.\nError opening output files: Invalid argument\n"
+Error: [Errno 32] Broken pipe
+MoviePy error: FFMPEG encountered the following error while writing file clips/clip_000_20261010_132328_0s-21s.mp4:
+ b"Stream map '0:a:0' matches no streams.\nTo ignore this, add a trailing '?' to the map.\nFailed to set value '0:a:0' for option 'map': Invalid argument\nError parsing options for output file clips/clip_000_20261010_132328_0s-21s.mp4.\nError opening output files: Invalid argument\n"
 Traceback (most recent call last):
-  File "/app/main.py", line 35, in main
-    scheduler = VideoScheduler(
-        config=config,
-    ...<2 lines>...
-        video_end_time=VIDEO_END_TIME
+  File "/app/.venv/lib/python3.13/site-packages/moviepy/video/io/ffmpeg_writer.py", line 136, in write_frame
+    self.proc.stdin.write(img_array.tobytes())
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):
     )
-  File "/app/scheduler.py", line 22, in __init__
-    self._download_video_once()
-    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "/app/scheduler.py", line 25, in _download_video_once
-    self.downloader.download_video(self.video_url, self.video_file_path)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/app/downloader.py", line 21, in download_video
-    raise Exception(f"Failed to download video. Status code: {response.status_code}")
-Exception: Failed to download video. Status code: 403
+    ^
+  File "/app/main.py", line 44, in main
+  File "<decorator-gen-55>", line 2, in write_videofile
+  File "/app/.venv/lib/python3.13/site-packages/moviepy/decorators.py", line 54, in requires_duration
+    scheduler.start_scheduling()
+    return f(clip, *a, **k)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "<decorator-gen-54>", line 2, in write_videofile
+  File "/app/.venv/lib/python3.13/site-packages/moviepy/decorators.py", line 135, in use_clip_fps_by_default
+  File "/app/scheduler.py", line 48, in start_scheduling
+    return f(clip, *new_a, **new_kw)
+    self.processor.trim_video_clip(self.video_file_path, start, end, clip_path)
+  File "<decorator-gen-53>", line 2, in write_videofile
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/processor.py", line 62, in trim_video_clip
+    clip.write_videofile(
+    ~~~~~~~~~~~~~~~~~~~~^
+        output_path,
+        ^^^^^^^^^^^^
+    ...<6 lines>...
+        ffmpeg_params=audio_params if audio_params else None
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.13/site-packages/moviepy/decorators.py", line 22, in convert_masks_to_RGB
+    return f(clip, *a, **k)
+  File "/app/.venv/lib/python3.13/site-packages/moviepy/video/VideoClip.py", line 300, in write_videofile
+    ffmpeg_write_video(self, filename, fps, codec,
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                       bitrate=bitrate,
+                       ^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                       ffmpeg_params=ffmpeg_params,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                       logger=logger)
+                       ^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.13/site-packages/moviepy/video/io/ffmpeg_writer.py", line 228, in ffmpeg_write_video
+    writer.write_frame(frame)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/app/.venv/lib/python3.13/site-packages/moviepy/video/io/ffmpeg_writer.py", line 180, in write_frame
+    raise IOError(error)
+OSError: [Errno 32] Broken pipe
+MoviePy error: FFMPEG encountered the following error while writing file clips/clip_000_20261010_132328_0s-21s.mp4:
+ b"Stream map '0:a:0' matches no streams.\nTo ignore this, add a trailing '?' to the map.\nFailed to set value '0:a:0' for option 'map': Invalid argument\nError parsing options for output file clips/clip_000_20261010_132328_0s-21s.mp4.\nError opening output files: Invalid argument\n"
