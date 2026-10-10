@@ -3,48 +3,42 @@
 # Railway deployment with FFmpeg and persistent volume
 # ─────────────────────────────────────────────────────────
 
-FROM python:3.12-slim AS base
+FROM python:3.12-slim
 
-# System dependencies: FFmpeg, curl (healthcheck)
+# System dependencies: FFmpeg
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ffmpeg \
-        curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Verify FFmpeg
+# Verify FFmpeg installation
 RUN ffmpeg -version && ffprobe -version
 
-# App directory
+# Set working directory
 WORKDIR /app
 
-# Install Python deps first (layer cache)
+# Copy and install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY app/ app/
 
-# Create non-root user
+# Create non-root user and data directories
 RUN useradd --create-home appuser && \
     mkdir -p /data/sources /data/clips /data/state && \
     chown -R appuser:appuser /data /app
 
+# Switch to non-root user
 USER appuser
 
-# Environment defaults (overridden by Railway env vars)
-ENV DATA_DIR=/data
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONDONTWRITEBYTECODE=1
+# Environment variables
+ENV DATA_DIR=/data \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
 
-# The persistent volume is mounted at /data by Railway
+# The persistent volume will be mounted at /data by Railway
 VOLUME ["/data"]
 
-# Health check (process is alive)
-HEALTHCHECK --interval=60s --timeout=5s --retries=3 \
-    CMD pgrep -f "python" || exit 1
-
-# Default: run the scheduled worker
-# Override with Railway start command if needed
-ENTRYPOINT ["python", "-m", "app.main"]
-CMD ["run-worker"]
+# Default command (can be overridden by Railway)
+CMD ["python", "-m", "app.main", "run-worker"]
