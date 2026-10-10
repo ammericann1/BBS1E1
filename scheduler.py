@@ -6,9 +6,9 @@ from processor import VideoProcessor
 from uploader import CloudinaryUploader, InstagramUploader
 
 class VideoScheduler:
-    def __init__(self, config: Config, gdrive_url: str, video_start_time: float = 0, video_end_time: float = None):
+    def __init__(self, config: Config, video_url: str, video_start_time: float = 0, video_end_time: float = None):
         self.config = config
-        self.video_url = gdrive_url
+        self.video_url = video_url
         self.video_start_time = video_start_time
         self.video_end_time = video_end_time
 

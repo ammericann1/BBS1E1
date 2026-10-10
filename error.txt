@@ -1,0 +1,21 @@
+Starting Container
+📥 Downloading video from Dropbox...
+→ https://dl.dropboxusercontent.com/scl/fi/24yybeouwv7qlxddt11nj/Young.Sheldon.S01E05.720p.BluRay.x264-GalaxyTV.mkv?dl=1
+❌ Error downloading video: Failed to download video. Status code: 403
+Error: Failed to download video. Status code: 403
+Traceback (most recent call last):
+  File "/app/main.py", line 35, in main
+    scheduler = VideoScheduler(
+        config=config,
+    ...<2 lines>...
+        video_end_time=VIDEO_END_TIME
+    )
+  File "/app/scheduler.py", line 22, in __init__
+    self._download_video_once()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/app/scheduler.py", line 25, in _download_video_once
+    self.downloader.download_video(self.video_url, self.video_file_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/downloader.py", line 21, in download_video
+    raise Exception(f"Failed to download video. Status code: {response.status_code}")
+Exception: Failed to download video. Status code: 403

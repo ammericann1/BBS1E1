@@ -8,9 +8,12 @@ def main():
     config = Config()
 
     VIDEO_START_TIME = 0
-    DROPBOX_VIDEO_URL = "https://dl.dropboxusercontent.com/scl/fi/24yybeouwv7qlxddt11nj/Young.Sheldon.S01E05.720p.BluRay.x264-GalaxyTV.mkv?rlkey=60vp4yi4wujnuv1sjuqyr61uk"
 
-    GDRIVE_VIDEO_URL = "https://drive.google.com/uc?id=1At6VPIBB02SNAdJSOg9eDlQKPqtvhSsw&export=download"
+    # Use Google Drive URL - more reliable than Dropbox
+    VIDEO_URL = "https://drive.google.com/uc?id=1At6VPIBB02SNAdJSOg9eDlQKPqtvhSsw&export=download"
+
+    # Or use a fresh Dropbox link (this one seems expired)
+    # VIDEO_URL = "your_updated_dropbox_link_here"
 
     VIDEO_END_TIME = None
 
@@ -34,7 +37,7 @@ def main():
     try:
         scheduler = VideoScheduler(
             config=config,
-            gdrive_url=DROPBOX_VIDEO_URL,  # still uses same param name
+            video_url=VIDEO_URL,
             video_start_time=VIDEO_START_TIME,
             video_end_time=VIDEO_END_TIME
         )

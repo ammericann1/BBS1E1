@@ -52,6 +52,13 @@ class VideoProcessor:
                 # ✅ Apply enhancements
                 clip = clip.fl_image(enhance_frame)
 
+                # Extract English audio track if available
+                # Most multi-language videos have English as first or second track
+                audio_params = []
+                if clip.audio is not None:
+                    # Force English audio by using first audio track (usually English in international releases)
+                    audio_params = ["-map", "0:v:0", "-map", "0:a:0"]  # Map first video and first audio stream
+
                 clip.write_videofile(
                     output_path,
                     codec="libx264",
@@ -59,7 +66,8 @@ class VideoProcessor:
                     temp_audiofile="temp-audio.m4a",
                     remove_temp=True,
                     verbose=False,
-                    logger=None
+                    logger=None,
+                    ffmpeg_params=audio_params if audio_params else None
                 )
 
             print(f"✅ Clip created: {output_path} ({start_time}s - {actual_end_time}s)")
