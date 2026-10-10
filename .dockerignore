@@ -1,0 +1,44 @@
+# Secrets
+.env
+*.env
+credentials.json
+*.key
+*.pem
+token.json
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+env/
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Media files (never bundle into image)
+*.mp4
+*.mkv
+*.avi
+*.mov
+*.db
+*.sqlite
+/data/
+
+# Docs
+*.md
+LICENSE
+prompt.txt
+
+# OS
+.DS_Store
+Thumbs.db

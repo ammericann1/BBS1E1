@@ -1,0 +1,46 @@
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Environment / secrets
+.env
+credentials.json
+*.key
+*.pem
+token.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test / coverage
+htmlcov/
+.coverage
+.pytest_cache/
+
+# Data (never commit media or state)
+/data/
+*.mp4
+*.mkv
+*.avi
+*.mov
+*.db
+*.sqlite
+
+# Docker
+docker-compose.override.yml
+
+# Misc
+prompt.txt
